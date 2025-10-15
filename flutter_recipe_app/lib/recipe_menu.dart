@@ -45,10 +45,7 @@ class MenuItem extends StatelessWidget {
           Icon(icon, color: Colors.redAccent, size: 30),
           SizedBox(height: 5),
           // 전달받은 텍스트 데이터로 위젯 생성
-          Text(
-            text,
-            style: TextStyle(color: Colors.black87),
-          ),
+          Text(text, style: TextStyle(color: Colors.black87)),
         ],
       ),
     );
