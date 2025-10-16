@@ -73,6 +73,9 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  # 각각의 font weight에 해당하는 폰트파일을 지정해두면
+  # Text 위젯의 style에서 fontWeight를 지정하면 해당 fontWeight에
+  # 해당하는 폰트를 지정해줌
   fonts:
     - family: NotoSansKR
       fonts:
@@ -83,13 +86,13 @@ flutter:
         - asset: fonts/NotoSansKR-Light.ttf
           weight: 300
         - asset: fonts/NotoSansKR-Regular.ttf
-          weight: 400
+          weight: 400 # FontWeight.normal
         - asset: fonts/NotoSansKR-Medium.ttf
           weight: 500
         - asset: fonts/NotoSansKR-SemiBold.ttf
           weight: 600
         - asset: fonts/NotoSansKR-Bold.ttf
-          weight: 700
+          weight: 700 # FontWeight.bold
         - asset: fonts/NotoSansKR-ExtraBold.ttf
           weight: 800
         - asset: fonts/NotoSansKR-Black.ttf

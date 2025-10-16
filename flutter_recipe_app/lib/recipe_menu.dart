@@ -3,15 +3,19 @@ import 'package:flutter/material.dart';
 class RecipeMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        // 추출한 MenuItem 위젯을 재사용.
-        // 아이콘과 텍스트만 다르게 전달해 동일한 디자인의 다른 메뉴 생성.
-        MenuItem(icon: Icons.heart_broken, text: 'A'),
-        MenuItem(icon: Icons.check, text: 'B'),
-        MenuItem(icon: Icons.star, text: 'C'),
-        MenuItem(icon: Icons.cake_rounded, text: 'D'),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: Row(
+        spacing: 10,
+        children: [
+          // 추출한 MenuItem 위젯을 재사용.
+          // 아이콘과 텍스트만 다르게 전달해 동일한 디자인의 다른 메뉴 생성.
+          MenuItem(icon: Icons.heart_broken, text: 'A'),
+          MenuItem(icon: Icons.check, text: 'B'),
+          MenuItem(icon: Icons.star, text: 'C'),
+          MenuItem(icon: Icons.cake_rounded, text: 'D'),
+        ],
+      ),
     );
   }
 }
