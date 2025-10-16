@@ -45,14 +45,34 @@ class SeatBottom extends StatelessWidget {
                           isDefaultAction: true, //기본 버튼 스타일 적용 (굵은 텍스트)
                           // 취소버튼 클릭 시
                           onPressed: () {
-                            Navigator.of(context).pop(); //뒤로가기
+                            Navigator.of(context).pop(); //팝업 닫기
                           },
                           child: Text('취소'),
                         ),
                         CupertinoDialogAction(
                           isDestructiveAction: true, // 주의/삭제/확정 성격의 버튼 (빨간색)
                           // 확인버튼 클릭 시
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pop(); // 팝업 닫기
+                            showCupertinoDialog(
+                              context: context,
+                              builder: (context) {
+                                Future.delayed(Duration(seconds: 1), () {
+                                  Navigator.of(context).pop();
+                                });
+
+                                return CupertinoAlertDialog(
+                                  title: Text(
+                                    '예매되었습니다.',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
                           child: Text('확인'),
                         ),
                       ],
