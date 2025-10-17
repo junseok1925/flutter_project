@@ -8,7 +8,6 @@ class SeatSelectBox extends StatelessWidget {
   void Function(int row, int col) onSelected;
 
   @override
-  @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Column(
@@ -42,7 +41,7 @@ class SeatSelectBox extends StatelessWidget {
     );
   }
 
-// 하단 선택 된 좌석과 예약하기 버튼 구역
+  // 하단 선택 된 좌석과 예약하기 버튼 구역
   Row label(String text, Color color) {
     return Row(
       children: [
@@ -60,7 +59,7 @@ class SeatSelectBox extends StatelessWidget {
     );
   }
 
-// 좌석 한줄
+  // 좌석 한줄
   Widget seatRow(int rowNum) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
@@ -90,7 +89,7 @@ class SeatSelectBox extends StatelessWidget {
     );
   }
 
-// 좌석 하나
+  // 좌석 하나
   Widget seat(int rowNum, int colNum) {
     return Expanded(
       child: Padding(

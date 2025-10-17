@@ -54,13 +54,15 @@ class SeatBottom extends StatelessWidget {
                           // 확인버튼 클릭 시
                           onPressed: () {
                             Navigator.of(context).pop(); // 팝업 닫기
+                            // 팝업 Alert창 띄우기
                             showCupertinoDialog(
                               context: context,
                               builder: (context) {
+                                // 1초 후 닫기
                                 Future.delayed(Duration(seconds: 1), () {
-                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop(); // 팝업 닫기
                                 });
-
+                                // 띄울 Alert 창 설정
                                 return CupertinoAlertDialog(
                                   title: Text(
                                     '예매되었습니다.',
