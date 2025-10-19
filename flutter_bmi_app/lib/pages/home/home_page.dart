@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bmi_app/pages/home/wodgets/gender_box.dart';
-import 'package:flutter_bmi_app/pages/home/wodgets/slider_box.dart';
+import 'package:flutter_bmi_app/pages/home/widgets/gender_box.dart';
+import 'package:flutter_bmi_app/pages/home/widgets/slider_box.dart';
+import 'package:flutter_bmi_app/pages/result/result_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -60,10 +61,26 @@ class _HomePageState extends State<HomePage> {
               width: double.infinity, // 해당 버튼 크기 가로 최대로
               height: 50,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  // bmi 구하는 식
+                  final meterHeight = height / 100;
+                  final bmi = weight / (meterHeight * meterHeight);
+                  // 계산하기 버튼 누르면 ResultPage로 이동하기
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return ResultPage(bmi);
+                      },
+                      // 계산된 bmi값을 ResultPage에서 사용할 수 있게 전달한다. (생성자로 보낼 수 있어서 일단 비활)
+                      // settings: RouteSettings(arguments: bmi),
+                    ),
+                  );
+                },
                 child: Text('계산하기'),
               ), // 배경색,그림자,입체감,그림자있는 주 액션 버튼
             ),
+            SizedBox(height: 20),
           ],
         ),
       ),

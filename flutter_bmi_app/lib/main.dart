@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       // themeMode: ThemeMode.dark, // 사용할 다크/라이트 테마 설정
-      themeMode: ThemeMode.light, // 사용할 다크/라이트 테마 설정
+      // themeMode: ThemeMode.light, // 사용할 다크/라이트 테마 설정
+      themeMode: ThemeMode.system, // 사용할 다크/라이트 테마 설정 - 시스템 설정 테마로 지정
       theme: lightTheme, // 기본 테마
       darkTheme: dartTheme, // 다크 테마
       home: HomePage(),

@@ -31,7 +31,7 @@ class SliderBox extends StatelessWidget {
             Text(unit, style: TextStyle(fontSize: 15)),
           ],
         ),
-        Slider(value: value, onChanged: onChanged, min: 1, max: 250),
+        Slider(value: value, onChanged: onChanged, min: 0, max: 250),
       ],
     );
   }
