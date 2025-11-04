@@ -19,6 +19,7 @@ class UserRepository {
 
     // 1. jsonDecode 함수 사용해서 Map으로 변환
     Map<String, dynamic> map = jsonDecode(dummy);
+    // -> {name: jun, age: 20}
 
     // 2. map ->  User 객체로 변환
     return User.fromJson(map);
