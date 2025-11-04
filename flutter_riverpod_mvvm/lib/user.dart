@@ -17,4 +17,3 @@ class User {
     return {'name': name, 'age': age};
   }
 }
-ㅜ
