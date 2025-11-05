@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_book_search_app/ui/home/home_view_model.dart';
+import 'package:flutter_book_search_app/ui/home/widgets/home_bottom_sheet.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   TextEditingController textEditingController = TextEditingController();
 
   @override
@@ -16,11 +19,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onSearch(String text) {
+    // 홈 뷰모델의 searchBooks 메서드 호출
+    ref.read(homeViewModelProvider.notifier).searchBooks(text);
     print('onSearch');
   }
 
   @override
   Widget build(BuildContext context) {
+    final homeState = ref.watch(homeViewModelProvider);
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -61,7 +68,32 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        body: Text('HomePage'),
+        // 격자로 아이템을 배치
+        body: GridView.builder(
+          padding: EdgeInsets.all(20),
+          itemCount: homeState.books.length, // 아이템 갯수
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3, // 한 줄에 배치할 아이템 갯수
+            childAspectRatio: 3 / 4, // 아이템 가로 세로 비율
+            crossAxisSpacing: 10, // 가로 간격 10
+            mainAxisSpacing: 10, // 세로 간격 10
+          ),
+          itemBuilder: (context, index) {
+            final book = homeState.books[index];
+            return GestureDetector(
+              onTap: () {
+                // 하단 슬라이드 모달 시트
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) {
+                    return HomeBottomSheet(book: book);
+                  },
+                );
+              },
+              child: Image.network(book.image),
+            );
+          },
+        ),
       ),
     );
   }
