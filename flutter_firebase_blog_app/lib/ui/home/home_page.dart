@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_firebase_blog_app/data/model/post.dart';
 import 'package:flutter_firebase_blog_app/ui/detil/detail_page.dart';
+import 'package:flutter_firebase_blog_app/ui/home/home_veiw_model.dart';
 import 'package:flutter_firebase_blog_app/ui/write/write_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -16,16 +19,22 @@ class HomePage extends StatelessWidget {
           children: [
             Text('최근 글', style: TextStyle(fontWeight: FontWeight.bold)),
             SizedBox(height: 20),
-            Expanded(
-              child: ListView.separated(
-                // 아래 3개는 ListView.separated()에서 필수
-                itemCount: 10,
-                separatorBuilder: (context, index) =>
-                    SizedBox(height: 10), //itemBuilder의 각 위젯들 사이에 배치할 위젯 설정
-                itemBuilder: (context, index) {
-                  return item();
-                },
-              ),
+            Consumer(
+              builder: (context, ref, child) {
+                final posts = ref.watch(HomeVeiwModelProvider);
+                return Expanded(
+                  child: ListView.separated(
+                    // 아래 3개는 ListView.separated()에서 필수
+                    itemCount: posts.length,
+                    separatorBuilder: (context, index) =>
+                        SizedBox(height: 10), //itemBuilder의 각 위젯들 사이에 배치할 위젯 설정
+                    itemBuilder: (context, index) {
+                      final post = posts[index];
+                      return item(post: post);
+                    },
+                  ),
+                );
+              },
             ),
           ],
         ),
@@ -49,7 +58,9 @@ class HomePage extends StatelessWidget {
 }
 
 class item extends StatelessWidget {
-  const item({super.key});
+  final Post post;
+
+  const item({super.key, required this.post}); // 전달받을 게시글 데이터
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +71,7 @@ class item extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return DetailPage();
+              return DetailPage(post);
             },
           ),
         );
@@ -77,10 +88,7 @@ class item extends StatelessWidget {
               height: 140,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.network(
-                  'https://picsum.photos/200/300',
-                  fit: BoxFit.cover,
-                ),
+                child: Image.network(post.imageUrl, fit: BoxFit.cover),
               ),
             ),
             Container(
@@ -96,18 +104,18 @@ class item extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '제목제목제목제목',
+                    post.title,
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
                   Text(
-                    '내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내',
+                    post.content,
                     overflow: TextOverflow.ellipsis, // 내용이 길어지면 "..." 처리
                     style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   ),
                   SizedBox(height: 5),
                   Text(
-                    '25.11.02 20:30',
+                    post.createdAt.toIso8601String(),
                     style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                   ),
                 ],
