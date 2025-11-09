@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_blog_app/data/model/post.dart';
+import 'package:flutter_firebase_blog_app/ui/detil/detail_view_model.dart';
 import 'package:flutter_firebase_blog_app/ui/write/write_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DetailPage extends StatelessWidget {
+class DetailPage extends ConsumerWidget {
+  DetailPage(this.post);
+  Post post;
+
   @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(detailViewModelProvider(post));
+
+    // state가 아직 null이면 로딩 화면만 보여줌
+    if (state == null) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
     return Scaffold(
       appBar: AppBar(
         actions: [
-          iconButton((Icons.delete), () {
-            print('123');
+          iconButton((Icons.delete), () async {
+            print('delete tap');
+            final vm = ref.read(detailViewModelProvider(post).notifier);
+            final result = await vm.deletePost();
+            if (result) {
+              Navigator.pop(context);
+            }
           }),
           iconButton((Icons.edit), () {
             // 편집 아이콘 클릭 시 wirte_page로 이동
@@ -27,7 +43,7 @@ class DetailPage extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.only(bottom: 400),
         children: [
-          Image.network('https://picsum.photos/200/300', fit: BoxFit.cover),
+          Image.network(state.imageUrl, fit: BoxFit.cover),
           SizedBox(height: 30),
           Padding(
             padding: EdgeInsetsGeometry.symmetric(horizontal: 20),
@@ -36,12 +52,12 @@ class DetailPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '제목 부분입니다',
+                  state.title,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 9),
                 Text(
-                  '강준석',
+                  state.writer,
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -49,17 +65,14 @@ class DetailPage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '25.11.02 20:30',
+                  state.createdAt.toIso8601String(),
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w200,
                   ), //얇게
                 ),
                 SizedBox(height: 15),
-                Text(
-                  '내용내용내용내용내용내용내용내용내용내용내용내용' * 10,
-                  style: TextStyle(fontSize: 16),
-                ),
+                Text(state.content, style: TextStyle(fontSize: 16)),
               ],
             ),
           ),
