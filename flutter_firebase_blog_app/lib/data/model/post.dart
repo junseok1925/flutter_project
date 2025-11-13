@@ -1,4 +1,6 @@
 //Firestore에 저장되는 “하나의 게시글” 구조를 Dart 객체로 표현
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Post {
   String id;
   String title;
@@ -20,12 +22,14 @@ class Post {
   // Firestore에서 받은 JSON(Map<String, dynamic>) 데이터를 Dart 객체로 변환
   Post.fromJson(Map<String, dynamic> map)
     : this(
-        id: map['id'],
-        title: map['title'],
-        content: map['content'],
-        writer: map['writer'],
-        imageUrl: map['imageUrl'],
-        createdAt: DateTime.parse(map['createdAt']),
+        id: map['id'] ?? '',
+        title: map['title'] ?? '',
+        content: map['content'] ?? '',
+        writer: map['writer'] ?? '',
+        imageUrl: map['imageUrl'] ?? '',
+        createdAt: map['createdAt'] is Timestamp
+            ? (map['createdAt'] as Timestamp).toDate()
+            : DateTime.parse(map['createdAt'].toString()),
       );
 
   // 2. toJson 메서드 만들기

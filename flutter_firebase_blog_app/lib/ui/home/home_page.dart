@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_firebase_blog_app/data/model/post.dart';
 import 'package:flutter_firebase_blog_app/ui/detil/detail_page.dart';
-import 'package:flutter_firebase_blog_app/ui/home/home_veiw_model.dart';
+import 'package:flutter_firebase_blog_app/ui/home/home_view_model.dart';
 import 'package:flutter_firebase_blog_app/ui/write/write_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
             SizedBox(height: 20),
             Consumer(
               builder: (context, ref, child) {
-                final posts = ref.watch(HomeVeiwModelProvider);
+                final posts = ref.watch(HomeViewModelProvider);
                 return Expanded(
                   child: ListView.separated(
                     // 아래 3개는 ListView.separated()에서 필수
@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) {
-                return WritePage();
+                return WritePage(null);
               },
             ),
           );
@@ -59,7 +59,6 @@ class HomePage extends StatelessWidget {
 
 class item extends StatelessWidget {
   final Post post;
-
   const item({super.key, required this.post}); // 전달받을 게시글 데이터
 
   @override
