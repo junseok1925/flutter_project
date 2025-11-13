@@ -11,6 +11,7 @@ class DetailViewModel extends _$DetailViewModel {
   /// build()는 family로 전달받은 post를 초기 상태로 설정한다.
   @override
   Post? build(Post post) {
+    listenStream(post.id);
     return post;
   }
 
@@ -18,5 +19,21 @@ class DetailViewModel extends _$DetailViewModel {
   Future<bool> deletePost() async {
     if (state == null) return false; // state가 비었을 경우 예외 방지
     return await _repo.delete(state!.id);
+  }
+
+  final postRepository = PostRepository();
+  void listenStream(String id) {
+    final stream = postRepository.postStream(id);
+    final streamSub = stream.listen((data) {
+      //
+      if (data != null) {
+        state = data;
+      }
+    });
+
+    ref.onDispose(() {
+      //
+      streamSub.cancel();
+    });
   }
 }

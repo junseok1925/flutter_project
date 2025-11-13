@@ -58,7 +58,7 @@ final class DetailViewModelProvider
   }
 }
 
-String _$detailViewModelHash() => r'0cb77bb124c85aaa63c1a01e5a3c7fe809aa330c';
+String _$detailViewModelHash() => r'83f8a872c29b3934daeaa0a07b274165667c7afe';
 
 final class DetailViewModelFamily extends $Family
     with $ClassFamilyOverride<DetailViewModel, Post?, Post?, Post?, Post> {

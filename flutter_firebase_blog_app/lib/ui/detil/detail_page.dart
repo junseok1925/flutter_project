@@ -33,7 +33,7 @@ class DetailPage extends ConsumerWidget {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return WritePage();
+                  return WritePage(post);
                 },
               ),
             );
